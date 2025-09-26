@@ -25,11 +25,17 @@ public class Main{
           }
           else if(input.length() > 7 && input.substring(0, 6).equals("remove")){
               System.out.println("removing "+input.substring(7));
-              System.out.println(list.deleteAValue(input.substring(7)).getValue());
+              if (list.showValues().indexOf(input.substring(7)) != -1)
+                System.out.println(list.deleteAValue(input.substring(7)).getValue());
+              else
+                System.out.println(list.deleteAValue(input.substring(7)));
           }
           else if(input.equals("clear"))
           {
             list.clear();
+          }
+          else if(input.equals("test")){
+              list.test();
           }
           else if(!input.equals("exit")){
               System.out.println("I don't know how to "+input);
@@ -40,4 +46,6 @@ public class Main{
         // Printing the read line
         System.out.println("thanks for playing!");
     }
+
+
 }
