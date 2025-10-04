@@ -206,7 +206,7 @@ public class LinkedList{
   }
 
   //precondition: Linkedlist has more than one value
-  //postconditon:
+  //postconditon: Reverses the order of each node in the linked list
   public void reverse() {
     ListNode prevNode = head;
     ListNode currNode = prevNode.getNext();
@@ -225,7 +225,8 @@ public class LinkedList{
     }
   }
 
-  //precondition: n <= number of items in the linkedlist
+  //precondition: n <= number of items in the linkedlist an linked list needs at least one value in it
+  //postcondition: Each group of n nodes in the linkedlist are reversed starting from the head
   public void nReverse(int n) {
     boolean headDeclared = false;
     
