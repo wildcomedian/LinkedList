@@ -31,6 +31,9 @@ Problem:  Write a program that keeps and manipulates a linked list of
                                should clear the list
 
 */
+
+import java.util.List;
+
 public class LinkedList{
 
   //instance varialbes go here (think about what you need to keep track of!)
@@ -61,6 +64,7 @@ public class LinkedList{
       newNode.setNext(prevNode.getNext());
       prevNode.setNext(newNode);
     }
+    
     else {
       newNode.setNext(prevNode);
       head = newNode;
@@ -85,7 +89,12 @@ public class LinkedList{
     ListNode tempNode = head;
 
     if (head != null) {
-      
+
+      if (line.equals(head.getValue())) {
+        head = head.getNext();
+        return tempNode;
+      }
+
       while ( (tempNode.getNext() != null) && (!line.equals(tempNode.getNext().getValue())) ) {
         tempNode = tempNode.getNext();
       }
@@ -95,6 +104,7 @@ public class LinkedList{
         tempNode.setNext(deletedNode.getNext());
         return deletedNode;
       }
+      
     }
 
     return null;
@@ -111,7 +121,7 @@ public class LinkedList{
       
       while ( tempNode.getNext() != null ) {
         tempNode = tempNode.getNext();
-        currentList += ", " + tempNode.getValue() ;
+        currentList += ", " + tempNode.getValue();
       }
       return currentList;
     }
@@ -144,6 +154,7 @@ public class LinkedList{
     System.out.println("Adding egg: " + addAValue("egg").getValue());
     System.out.println("Adding flan: " + addAValue("flan").getValue());
     System.out.println("Adding french fries: " + addAValue("french fries").getValue());
+    System.out.println("Adding grapefruit: " + addAValue("grapefruit").getValue());
       
     System.out.println(showValues());
 
@@ -151,8 +162,8 @@ public class LinkedList{
 
     System.out.println("Ordering list\n");
 
-    System.out.println("Correct Series: apple, banana, canteloupe, dog, edamame, egg, flan, french fries");
-    System.out.println("LIST MATCHES: " + showValues().equals("apple, banana, canteloupe, dog, edamame, egg, flan, french fries"));
+    System.out.println("Correct Series: apple, banana, canteloupe, dog, edamame, egg, flan, french fries, grapefruit");
+    System.out.println("LIST MATCHES: " + showValues().equals("apple, banana, canteloupe, dog, edamame, egg, flan, french fries, grapefruit"));
 
     System.out.println("--------------------------------------------------------------------\n");
 
@@ -164,12 +175,91 @@ public class LinkedList{
 
     System.out.println("--------------------------------------------------------------------\n");
 
+    System.out.println("Reversing List");
+    System.out.println("Before Reverse: " + showValues());
+    reverse();
+    System.out.println("After Reverse: " + showValues());
+    System.out.println("Reversing list again for testing purposes: ");
+    reverse();
+
+    testNReverse(3);
+
     System.out.println("Clearing List\n");
-    System.out.println("Before Clear" + showValues());
+    System.out.println("Before Clear: " + showValues());
     clear();
     System.out.println("After Clear: " + showValues());
     System.out.println("List Cleared: " + showValues().equals(""));
+
+    
     
   }
+  
+  public void testNReverse(int n) {
+    System.out.println("--------------------------------------------------------------------\n");
+
+    System.out.println("Reversing List");
+    System.out.println("Before nReverse: " + showValues());
+    nReverse(n);
+    System.out.println("After nReverse: " + showValues());
+
+    System.out.println("--------------------------------------------------------------------\n");
+  }
+
+  //precondition: Linkedlist has more than one value
+  //postconditon:
+  public void reverse() {
+    ListNode prevNode = head;
+    ListNode currNode = prevNode.getNext();
+    ListNode nextNode = currNode.getNext();
     
+    prevNode.setNext(null);
+    currNode.setNext(prevNode);
+    head = currNode;
+
+    while (nextNode != null) { 
+      head = nextNode;
+      prevNode = currNode;
+      currNode = nextNode;
+      nextNode = nextNode.getNext();
+      currNode.setNext(prevNode);
+    }
+  }
+
+  //precondition: n <= number of items in the linkedlist
+  public void nReverse(int n) {
+    boolean headDeclared = false;
+    
+    ListNode prevNode= null; 
+    ListNode currNode = head; 
+    ListNode nextNode = currNode.getNext(); 
+    ListNode unsortedTailNode = head; 
+    ListNode sortedTailNode = null; 
+
+    
+    while (currNode != null) {
+      
+      for (int itemsReversed = 0; itemsReversed < n && currNode != null; itemsReversed++) {
+        currNode.setNext(prevNode);
+        prevNode = currNode;
+        currNode = nextNode;
+        if (nextNode != null) {
+          nextNode = nextNode.getNext();
+        }
+      }
+      
+      if (!headDeclared) {
+        head = prevNode;
+        headDeclared = true;
+      }
+      
+      if (sortedTailNode != null) {
+        sortedTailNode.setNext(prevNode);
+      }
+      
+      unsortedTailNode.setNext(nextNode);
+      sortedTailNode = unsortedTailNode;
+      unsortedTailNode = currNode;
+
+    }
+  }
 }

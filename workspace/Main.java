@@ -34,6 +34,13 @@ public class Main{
           {
             list.clear();
           }
+          else if(input.equals("reverse")){
+              list.reverse();
+          }
+          else if(input.matches("reverse[0-9]")){
+            int num = Integer.parseInt(input.substring(7));
+            list.nReverse(num);
+          }
           else if(input.equals("test")){
               list.test();
           }
